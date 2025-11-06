@@ -25,11 +25,13 @@ services:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
-    ports:
-      - 5055:5055
+    # Don't bind Overseerr directly to the host when using cloudflared tunnel.
+    # cloudflared will route traffic to the container over the internal Docker network.
     volumes:
       - ${PLEX_CONFIG_HOME}/overseerr/config:/app/config
     restart: unless-stopped
+    networks:
+      - proxy
 
   tautulli:
     image: lscr.io/linuxserver/tautulli:latest
@@ -45,4 +47,21 @@ services:
       - 8181:8181
     restart: unless-stopped
 
+  cloudflared:
+    image: cloudflare/cloudflared:latest
+    container_name: cloudflared
+    restart: unless-stopped
+    command: tunnel run
+    environment:
+      - TUNNEL_TOKEN=${TUNNEL_TOKEN}
+    volumes:
+      - ./cloudflared/config.yml:/etc/cloudflared/config.yml:ro
+    networks:
+      - proxy
+
   
+
+networks:
+  proxy:
+    driver: bridge
+

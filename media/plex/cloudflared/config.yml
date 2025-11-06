@@ -1,0 +1,11 @@
+# cloudflared tunnel ingress config
+# Replace `subdomain.domain.com` with your actual hostname.
+# This routes traffic for that hostname to the Overseerr container on port 5055.
+# The tunnel must already exist / be linked with the provided TUNNEL_TOKEN in env.
+
+ingress:
+  - hostname: subdomain.domain.com
+    service: http://overseerr:5055
+
+  # Catch-all: return 404 for anything else
+  - service: http_status:404
