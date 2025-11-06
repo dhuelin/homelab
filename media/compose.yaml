@@ -39,15 +39,12 @@ services:
   qbittorrent: 
     image: lscr.io/linuxserver/qbittorrent:latest 
     container_name: qbittorrent 
-    hostname: qbittorrent 
     environment: 
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
       - WEBUI_PORT=8080 
       - TORRENTING_PORT=${FIREWALL_VPN_INPUT_PORTS} # airvpn forwarded port, pulled from .env
-    ports: 
-      - 8080:8080 
     volumes: 
       - ${PLEX_CONFIG_HOME}/qbittorrent/config:/config 
       - ${PLEX_DOWNLOAD_HOME}:/downloads 
@@ -104,8 +101,6 @@ services:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
-    ports: 
-      - 9696:9696 
     volumes:
       - ${PLEX_CONFIG_HOME}/prowlarr/config:/config
     depends_on:
@@ -117,7 +112,6 @@ services:
   sonarr: 
     image: lscr.io/linuxserver/sonarr:latest 
     container_name: sonarr 
-    hostname: sonarr 
     environment: 
       - TZ=${TZ}
       - PUID=${PUID}
@@ -129,8 +123,6 @@ services:
     depends_on: 
       - prowlarr 
       - qbittorrent
-    ports: 
-      - 8989:8989 
     restart: unless-stopped
     networks:
       servarrnetwork:
@@ -139,7 +131,6 @@ services:
   radarr: 
     image: lscr.io/linuxserver/radarr:latest 
     container_name: radarr 
-    hostname: radarr 
     environment: 
       - TZ=${TZ}
       - PUID=${PUID}
@@ -148,8 +139,6 @@ services:
       - ${PLEX_CONFIG_HOME}/radarr/config:/config 
       - ${PLEX_DATA_HOME}/media:/mnt/media 
       - ${PLEX_DOWNLOAD_HOME}:/downloads 
-    ports: 
-      - 7878:7878 
     restart: unless-stopped 
     networks:
       servarrnetwork:
@@ -158,7 +147,6 @@ services:
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
-    hostname: bazarr 
     restart: unless-stopped
     environment:
       - PUID=${PUID}
@@ -168,8 +156,6 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${PLEX_CONFIG_HOME}/bazarr/config:/config
       - ${PLEX_DATA_HOME}:/data
-    ports:
-      - 6767:6767
     networks:
       servarrnetwork:
         ipv4_address: 172.39.0.6
