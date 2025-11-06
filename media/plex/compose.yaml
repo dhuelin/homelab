@@ -37,7 +37,7 @@ services:
     image: lscr.io/linuxserver/tautulli:latest
     container_name: tautulli
     hostname: tautulli
-    environement:
+    environment:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
