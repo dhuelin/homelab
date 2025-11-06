@@ -53,6 +53,8 @@ services:
         condition: service_healthy
         restart: true
     network_mode: service:gluetun
+    labels:
+      deunhealth.restart.on.unhealthy=true # Label added for deunhealth monitoring
     healthcheck:
       test: ping -c 1 www.google.com || exit 1
       interval: 60s
