@@ -1,0 +1,50 @@
+services:
+  plex:
+    image: lscr.io/linuxserver/plex:latest
+    container_name: plex
+    hostname: plex 
+    network_mode: host
+    restart: unless-stopped
+    environment:
+      - TZ=${TZ}
+      - PLEX_CLAIM=${PLEX_CLAIM} #optional
+      - PUID=${PUID}
+      - PGID=${PGID}
+    ports: 
+      - 32400:32400
+    devices:
+     - /dev/dri:/dev/dri # QuickSync
+    volumes:
+      - ${PLEX_CONFIG_HOME}/plex/config:/config
+      - ${PLEX_DATA_HOME}/media:/data
+      
+  overseerr:
+    image: sctx/overseerr:latest
+    container_name: overseerr
+    hostname: overseerr 
+    environment:
+      - LOG_LEVEL=debug
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    ports:
+      - 5055:5055
+    volumes:
+      - ${PLEX_CONFIG_HOME}/overseerr/config:/app/config
+    restart: unless-stopped
+
+  tautulli:
+    image: lscr.io/linuxserver/tautulli:latest
+    container_name: tautulli
+    hostname: tautulli
+    environement:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    volumes:
+      - ${PLEX_CONFIG_HOME}/tautulli/config:/config
+    ports:
+      - 8181:8181
+    restart: unless-stopped
+
+  
