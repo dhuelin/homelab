@@ -10,8 +10,6 @@ services:
       - PLEX_CLAIM=${PLEX_CLAIM} #optional
       - PUID=${PUID}
       - PGID=${PGID}
-    ports: 
-      - 32400:32400
     devices:
      - /dev/dri:/dev/dri # QuickSync
     volumes:
