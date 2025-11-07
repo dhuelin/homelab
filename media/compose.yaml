@@ -24,6 +24,8 @@ services:
       - 6881:6881 # qbittorrent torrent port
       - 6789:6789 # nzbget
       - 9696:9696 # prowlarr
+      - 8989:8989 # sonarr
+      - 7878:7878 # radarr
     volumes:
       - ${PLEX_CONFIG_HOME}/gluetun/config:/gluetun
     # Make a '.env' file in the same directory.
@@ -126,9 +128,7 @@ services:
       - prowlarr 
       - qbittorrent
     restart: unless-stopped
-    networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.3
+    network_mode: service:gluetun
     
   radarr: 
     image: lscr.io/linuxserver/radarr:latest 
@@ -142,9 +142,7 @@ services:
       - ${PLEX_DATA_HOME}/media:/mnt/media 
       - ${PLEX_DOWNLOAD_HOME}:/downloads 
     restart: unless-stopped 
-    networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.4
+    network_mode: service:gluetun
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
@@ -158,6 +156,4 @@ services:
       - /etc/localtime:/etc/localtime:ro
       - ${PLEX_CONFIG_HOME}/bazarr/config:/config
       - ${PLEX_DATA_HOME}:/data
-    networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.6
+    network_mode: service:gluetun
