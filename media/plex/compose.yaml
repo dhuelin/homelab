@@ -3,18 +3,22 @@ services:
     image: lscr.io/linuxserver/plex:latest
     container_name: plex
     hostname: plex 
-    network_mode: host
     restart: unless-stopped
     environment:
       - TZ=${TZ}
       - PLEX_CLAIM=${PLEX_CLAIM} #optional
       - PUID=${PUID}
       - PGID=${PGID}
+    ports:
+      - 32400:32400/tcp    # Plex remote & web
     devices:
      - /dev/dri:/dev/dri # QuickSync
     volumes:
       - ${PLEX_CONFIG_HOME}/plex/config:/config
       - ${PLEX_DATA_HOME}/media:/data
+    networks:
+      - proxy
+      - servarrnetwork
       
   overseerr:
     image: sctx/overseerr:latest
@@ -64,4 +68,6 @@ services:
 networks:
   proxy:
     driver: bridge
+  servarrnetwork:
+    external: true
 
