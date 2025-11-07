@@ -17,8 +17,8 @@ services:
       - ${PLEX_CONFIG_HOME}/plex/config:/config
       - ${PLEX_DATA_HOME}/media:/data
     networks:
-      - proxy
-      servarrnetwork:
+      proxy: {}                 # join the external proxy network
+      servarrnetwork:           # join the internal network with static IP
         ipv4_address: 172.39.0.10
       
   overseerr:
