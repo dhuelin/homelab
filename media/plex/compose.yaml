@@ -18,7 +18,8 @@ services:
       - ${PLEX_DATA_HOME}/media:/data
     networks:
       - proxy
-      - servarrnetwork
+      servarrnetwork:
+        ipv4_address: 172.39.0.10
       
   overseerr:
     image: sctx/overseerr:latest
@@ -36,6 +37,7 @@ services:
     restart: unless-stopped
     networks:
       - proxy
+      - servarrnetwork
 
   tautulli:
     image: lscr.io/linuxserver/tautulli:latest
