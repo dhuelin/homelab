@@ -26,6 +26,7 @@ services:
       - 9696:9696 # prowlarr
       - 8989:8989 # sonarr
       - 7878:7878 # radarr
+      - 6767:6767 # bazarr
     volumes:
       - ${PLEX_CONFIG_HOME}/gluetun/config:/gluetun
     # Make a '.env' file in the same directory.
