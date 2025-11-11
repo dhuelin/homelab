@@ -46,6 +46,7 @@ services:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
+      - UMASK=002
       - WEBUI_PORT=8080 
       - TORRENTING_PORT=${FIREWALL_VPN_INPUT_PORTS} # airvpn forwarded port, pulled from .env
     volumes: 
@@ -106,6 +107,7 @@ services:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
+      - UMASK=002
     volumes:
       - ${PLEX_CONFIG_HOME}/prowlarr/config:/config
     depends_on:
@@ -121,6 +123,7 @@ services:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
+      - UMASK=002
     volumes: 
       - ${PLEX_CONFIG_HOME}/sonarr/config:/config 
       - ${PLEX_DATA_HOME}/media:/mnt/media 
@@ -138,6 +141,7 @@ services:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
+      - UMASK=002
     volumes: 
       - ${PLEX_CONFIG_HOME}/radarr/config:/config 
       - ${PLEX_DATA_HOME}/media:/mnt/media 
@@ -153,6 +157,7 @@ services:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - UMASK=002
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${PLEX_CONFIG_HOME}/bazarr/config:/config

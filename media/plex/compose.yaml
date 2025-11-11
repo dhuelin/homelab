@@ -9,6 +9,7 @@ services:
       - PLEX_CLAIM=${PLEX_CLAIM} #optional
       - PUID=${PUID}
       - PGID=${PGID}
+      - UMASK=002
     ports:
       - 32400:32400/tcp    # Plex remote & web
     devices:
