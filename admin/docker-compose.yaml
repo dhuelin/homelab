@@ -17,8 +17,29 @@ services:
       - proxy
       - admin_net
 
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    command: -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    ports:
+      - 9000:9000
+      - 9443:9443
+    restart: unless-stopped
+    networks:
+      - proxy
+      - admin_net
+
+
 networks:
   proxy:
     external: true
   admin_net:
     driver: bridge
+
+
+volumes:
+  portainer_data:
