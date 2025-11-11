@@ -75,28 +75,28 @@ pages:
               - title: Radarr
                 url: https://arr.huelin.dev/radarr
                 # Radarr has a static IP on the servarrnetwork in compose
-                check-url: http://172.39.0.4:7878
+                check-url: http://10.99.0.4:7878
                 icon: di:radarr
               - title: Sonarr
                 url: https://arr.huelin.dev/sonarr
-                check-url: http://172.39.0.3:8989
+                check-url: http://10.99.0.3:8989
                 icon: di:sonarr
               - title: Bazarr
                 url: https://arr.huelin.dev/bazarr
-                check-url: http://172.39.0.6:6767
+                check-url: http://10.99.0.6:6767
                 icon: di:bazarr
               - title: Prowlarr
                 url: https://arr.huelin.dev/prowlarr
                 # Prowlarr, qBittorrent and NZBGet share the gluetun network namespace; check against the gluetun IP
-                check-url: http://172.39.0.2:9696
+                check-url: http://10.99.0.2:9696
                 icon: di:prowlarr
               - title: qBittorrent
                 url: https://torrent.huelin.dev/
-                check-url: http://172.39.0.2:8080
+                check-url: http://10.99.0.2:8080
                 icon: di:qbittorrent
               - title: NZBGet
                 url: https://nzbget.huelin.dev/
-                check-url: http://172.39.0.2:6789
+                check-url: http://10.99.0.2:6789
                 icon: di:nzbget
                 alt-status-codes:
                   - 401

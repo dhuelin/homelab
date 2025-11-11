@@ -36,7 +36,7 @@ Overseerr must be on the same Docker network as Sonarr/Radarr (or be able to rea
 	 - Sonarr: `http://sonarr:8989`
 	 - Radarr: `http://radarr:7878`
 
-2. Alternatively use the static IPs assigned in `media/compose.yaml` (e.g. `172.39.0.3` for Sonarr, `172.39.0.4` for Radarr) but hostnames are more maintainable.
+2. Alternatively use the static IPs assigned in `media/compose.yaml` (e.g. `10.99.0.3` for Sonarr, `10.99.0.4` for Radarr) but hostnames are more maintainable.
 
 If Overseerr cannot reach Sonarr/Radarr after joining `servarrnetwork`:
 

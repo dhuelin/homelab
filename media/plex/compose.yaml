@@ -19,7 +19,7 @@ services:
     networks:
       proxy: {}                 # join the external proxy network
       servarrnetwork:           # join the internal network with static IP
-        ipv4_address: 172.39.0.10
+        ipv4_address: 10.99.0.10
       
   overseerr:
     image: sctx/overseerr:latest
