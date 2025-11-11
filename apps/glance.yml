@@ -103,10 +103,11 @@ pages:
                   - 403
               - title: File Browser
                 url: https://arrfiles.huelin.dev/
+                check-url: http://10.99.0.2:8123
                 icon: di:filebrowser
               - title: Portainer
                 url: https://portainer.huelin.dev/
-                #check-url: http://10.0.0.100:80
+                #check-url: http://10.99.0.100:80
                 icon: di:portainer
 
   - name: Home
