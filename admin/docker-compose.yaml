@@ -14,7 +14,6 @@ services:
         - 8123:80
 
     networks:
-      - proxy
       - admin_net
 
 
@@ -30,13 +29,10 @@ services:
       - 9443:9443
     restart: unless-stopped
     networks:
-      - proxy
       - admin_net
 
 
 networks:
-  proxy:
-    external: true
   admin_net:
     driver: bridge
 
