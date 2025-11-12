@@ -12,6 +12,19 @@ services:
       interval: 10s
       timeout: 3s
 
+  
+  nginx:
+      container_name: nginx
+      image: nginx:latest
+      hostname: nginx
+      restart: unless-stopped
+      ports:
+        - 443:443
+      networks:
+        - nginx-network
+      volumes:
+        - ./nginx_data:/etc/nginx
+
   ddns:
     image: favonia/cloudflare-ddns:latest
     container_name: cloudflare-ddns
@@ -35,3 +48,8 @@ services:
     ports:
       - 8888:80/tcp
       
+
+
+networks:
+  nginx-network:
+    external: true
