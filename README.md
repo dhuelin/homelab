@@ -55,7 +55,7 @@ tunnel: <your-tunnel-id>
 credentials-file: /etc/cloudflared/<credentials>.json
 
 ingress:
-	- hostname: plex.huelin.dev
+	- hostname: plex.example.com
 		service: http://plex:32400
 	- service: http_status:404
 ```

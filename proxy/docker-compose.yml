@@ -36,7 +36,7 @@ services:
     security_opt: [no-new-privileges:true] # Another protection to restrict superuser privileges (optional but recommended)
     environment:
       - CLOUDFLARE_API_TOKEN=${CLOUDFLARE_API_TOKEN}
-      - DOMAINS=huelin.dev,*.huelin.dev
+      - DOMAINS=${DOMAIN},*.${DOMAIN}
       - PROXIED=true
       - IP6_PROVIDER=none
 

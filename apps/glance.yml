@@ -38,7 +38,7 @@ pages:
             title: Services
             sites:
               - title: Plex
-                url: https://plex.huelin.dev/
+                url: https://plex.example.com/
                 # Plex is run with network_mode: host in the compose; check against localhost
                 check-url: http://127.0.0.1:32400
                 icon: di:plex
@@ -46,19 +46,19 @@ pages:
                   - 401
                   - 403
               - title: Pi-Hole
-                url: https://pihole.huelin.dev/admin
+                url: https://pihole.example.com/admin
                 check-url: http://10.0.0.103:80
                 icon: di:pi-hole
               - title: NGINX Proxy Manager
-                url: https://proxy.huelin.dev/
+                url: https://proxy.example.com/
                 check-url: http://10.0.0.102:81
                 icon: di:nginx
               - title: Docmost
-                url: https://doc.huelin.dev/
+                url: https://doc.example.com/
                 check-url: http://10.0.0.104:3001
                 icon: di:notion
               - title: Tautulli
-                url: https://tautulli.huelin.dev/
+                url: https://tautulli.example.com/
                 # Tautulli is published on host port 8181 in the compose; check localhost
                 check-url: http://127.0.0.1:8181
                 icon: di:tautulli
@@ -68,45 +68,45 @@ pages:
             title: Servarr
             sites:
               - title: Overseerr
-                url: https://betterplex.huelin.dev
+                url: https://betterplex.example.com
                 # Overseerr is exposed externally via cloudflared; use the public hostname for health checks
-                check-url: https://betterplex.huelin.dev
+                check-url: https://betterplex.example.com
                 icon: di:overseerr
               - title: Radarr
-                url: https://arr.huelin.dev/radarr
+                url: https://arr.example.com/radarr
                 # Radarr has a static IP on the servarrnetwork in compose
                 check-url: http://10.99.0.4:7878
                 icon: di:radarr
               - title: Sonarr
-                url: https://arr.huelin.dev/sonarr
+                url: https://arr.example.com/sonarr
                 check-url: http://10.99.0.3:8989
                 icon: di:sonarr
               - title: Bazarr
-                url: https://arr.huelin.dev/bazarr
+                url: https://arr.example.com/bazarr
                 check-url: http://10.99.0.6:6767
                 icon: di:bazarr
               - title: Prowlarr
-                url: https://arr.huelin.dev/prowlarr
+                url: https://arr.example.com/prowlarr
                 # Prowlarr, qBittorrent and NZBGet share the gluetun network namespace; check against the gluetun IP
                 check-url: http://10.99.0.2:9696
                 icon: di:prowlarr
               - title: qBittorrent
-                url: https://torrent.huelin.dev/
+                url: https://torrent.example.com/
                 check-url: http://10.99.0.2:8080
                 icon: di:qbittorrent
               - title: NZBGet
-                url: https://nzbget.huelin.dev/
+                url: https://nzbget.example.com/
                 check-url: http://10.99.0.2:6789
                 icon: di:nzbget
                 alt-status-codes:
                   - 401
                   - 403
               - title: File Browser
-                url: https://arrfiles.huelin.dev/
+                url: https://arrfiles.example.com/
                 check-url: http://10.99.0.2:8123
                 icon: di:filebrowser
               - title: Portainer
-                url: https://portainer.huelin.dev/
+                url: https://portainer.example.com/
                 #check-url: http://10.99.0.100:80
                 icon: di:portainer
 
