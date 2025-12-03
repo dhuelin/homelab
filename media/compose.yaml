@@ -4,7 +4,7 @@ networks:
     name: servarrnetwork
     ipam:
       config:
-        - subnet: 172.39.0.0/24
+        - subnet: 10.99.0.0/24
 
 services:
   # airvpn recommended (referral url: https://airvpn.org/?referred_by=673908)
@@ -17,13 +17,16 @@ services:
       - /dev/net/tun:/dev/net/tun # If running on an LXC see readme for more info.
     networks:
       servarrnetwork:
-        ipv4_address: 172.39.0.2
+        ipv4_address: 10.99.0.2
     ports:
       - ${FIREWALL_VPN_INPUT_PORTS}:${FIREWALL_VPN_INPUT_PORTS} # airvpn forwarded port, pulled from .env
       - 8080:8080 # qbittorrent web interface
       - 6881:6881 # qbittorrent torrent port
       - 6789:6789 # nzbget
       - 9696:9696 # prowlarr
+      - 8989:8989 # sonarr
+      - 7878:7878 # radarr
+      - 6767:6767 # bazarr
     volumes:
       - ${PLEX_CONFIG_HOME}/gluetun/config:/gluetun
     # Make a '.env' file in the same directory.
@@ -39,15 +42,13 @@ services:
   qbittorrent: 
     image: lscr.io/linuxserver/qbittorrent:latest 
     container_name: qbittorrent 
-    hostname: qbittorrent 
     environment: 
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
+      - UMASK=002
       - WEBUI_PORT=8080 
       - TORRENTING_PORT=${FIREWALL_VPN_INPUT_PORTS} # airvpn forwarded port, pulled from .env
-    ports: 
-      - 8080:8080 
     volumes: 
       - ${PLEX_CONFIG_HOME}/qbittorrent/config:/config 
       - ${PLEX_DOWNLOAD_HOME}:/downloads 
@@ -56,6 +57,8 @@ services:
         condition: service_healthy
         restart: true
     network_mode: service:gluetun
+    labels:
+      deunhealth.restart.on.unhealthy: true # Label added for deunhealth monitoring
     healthcheck:
       test: ping -c 1 www.google.com || exit 1
       interval: 60s
@@ -104,8 +107,7 @@ services:
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
-    ports: 
-      - 9696:9696 
+      - UMASK=002
     volumes:
       - ${PLEX_CONFIG_HOME}/prowlarr/config:/config
     depends_on:
@@ -117,11 +119,11 @@ services:
   sonarr: 
     image: lscr.io/linuxserver/sonarr:latest 
     container_name: sonarr 
-    hostname: sonarr 
     environment: 
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
+      - UMASK=002
     volumes: 
       - ${PLEX_CONFIG_HOME}/sonarr/config:/config 
       - ${PLEX_DATA_HOME}/media:/mnt/media 
@@ -129,47 +131,35 @@ services:
     depends_on: 
       - prowlarr 
       - qbittorrent
-    ports: 
-      - 8989:8989 
     restart: unless-stopped
-    networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.3
+    network_mode: service:gluetun
     
   radarr: 
     image: lscr.io/linuxserver/radarr:latest 
     container_name: radarr 
-    hostname: radarr 
     environment: 
       - TZ=${TZ}
       - PUID=${PUID}
       - PGID=${PGID}
+      - UMASK=002
     volumes: 
       - ${PLEX_CONFIG_HOME}/radarr/config:/config 
       - ${PLEX_DATA_HOME}/media:/mnt/media 
       - ${PLEX_DOWNLOAD_HOME}:/downloads 
-    ports: 
-      - 7878:7878 
     restart: unless-stopped 
-    networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.4
+    network_mode: service:gluetun
 
   bazarr:
     image: lscr.io/linuxserver/bazarr:latest
     container_name: bazarr
-    hostname: bazarr 
     restart: unless-stopped
     environment:
       - PUID=${PUID}
       - PGID=${PGID}
       - TZ=${TZ}
+      - UMASK=002
     volumes:
       - /etc/localtime:/etc/localtime:ro
       - ${PLEX_CONFIG_HOME}/bazarr/config:/config
       - ${PLEX_DATA_HOME}:/data
-    ports:
-      - 6767:6767
-    networks:
-      servarrnetwork:
-        ipv4_address: 172.39.0.6
+    network_mode: service:gluetun

@@ -1,0 +1,41 @@
+services:
+  filebrowser:
+    container_name: filebrowser
+    image: filebrowser/filebrowser:latest
+    environment:
+      - TZ=${TZ}
+      - PUID=${PUID}
+      - PGID=${PGID}
+    volumes:
+        - ${FILEBROWSER_DATA}:/srv
+        - ${FILEBROWSER_DATABASE}:/database
+        - ${FILEBROWSER_CONFIG}:/config
+    ports:
+        - 8123:80
+
+    networks:
+      - admin_net
+
+
+  portainer:
+    container_name: portainer
+    image: portainer/portainer-ce:latest
+    command: -H unix:///var/run/docker.sock
+    volumes:
+      - /var/run/docker.sock:/var/run/docker.sock
+      - portainer_data:/data
+    ports:
+      - 9000:9000
+      - 9443:9443
+    restart: unless-stopped
+    networks:
+      - admin_net
+
+
+networks:
+  admin_net:
+    driver: bridge
+
+
+volumes:
+  portainer_data:
